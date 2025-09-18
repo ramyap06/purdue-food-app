@@ -1,0 +1,7 @@
+{
+    "name": "Blair Waldorf",
+    "gender": "female",
+    "height_in": 65,
+    "weight_lb": 125,
+    "daily_goals": { "protein": 75, "carbs": 200, "fat": 50 }
+}
