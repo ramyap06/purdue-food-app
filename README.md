@@ -1,4 +1,4 @@
-# purdue-food-helper
+# purdue-food-app
 
 ## Objective
 Web application that help Purdue students reach their nutrition goals with dining hall food.
