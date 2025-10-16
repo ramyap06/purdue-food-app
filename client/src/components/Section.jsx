@@ -1,9 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Section({children}) {
+export default function Section({children, path}) {
     return (
-        <li className="text-black font-sanserif text-xl hover:text-amber-300">
-            <a href="#">{children}</a>
-        </li>
+        <Link to={path}>
+            <li className="text-black font-sanserif text-xl hover:text-amber-300">
+                {children}
+            </li>
+        </Link>
     );
 }
