@@ -1,6 +1,6 @@
 import React from "react";
 
-function Header() {
+export default function Header() {
     return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-white text-center">
             <h1 class="text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 drop-shadow-lg">
@@ -12,5 +12,3 @@ function Header() {
         </div>
     );
 }
-
-export default Header;
