@@ -1,17 +1,29 @@
 import { useParams } from "react-router-dom";
 import Navbar from '../components/Navbar';
+import FoodItem from "../components/FoodItem";
 
 export default function DiningHallPage() {
     const { hallName } = useParams();
-      return (
-        <div>
-        <Navbar />
-        <div className="p-6">
-            <h1 className="text-3xl font-bold capitalize">{hallName} Dining Hall</h1>
-            <p className="text-gray-600 mt-2">
-            This page was dynamically generated for <b>{hallName}</b> — no hardcoding needed.
-            </p>
-        </div>
+    return (
+        <div className="min-h-screen bg-black text-white">
+            <Navbar />
+
+            {/* Title */}
+            <div className="p-6 text-center">
+                <h1 className="text-3xl font-bold capitalize mb-2">
+                    {hallName} Dining Hall
+                </h1>
+            </div>
+
+            {/* Food items */}
+            <div className="flex justify-center mt-6">
+                <div className="w-3/4 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+                    <FoodItem name="Sandwich" carbCount={30} fatCount={10} proteinCount={25} />
+                    <FoodItem name="Fries" carbCount={30} fatCount={10} proteinCount={25} />
+                    <FoodItem name="Yogurt" carbCount={30} fatCount={10} proteinCount={25} />
+                    <FoodItem name="Banana" carbCount={30} fatCount={10} proteinCount={25} />
+                </div>
+            </div>
         </div>
     );
 }
