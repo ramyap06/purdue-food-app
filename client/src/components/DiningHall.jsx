@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function DiningHall({children, path, dist, hMeter}) {
+export default function DiningHall({children, path, dist, hMeter}) {
     return (
         <Link to={path}>
             <li className="list-none block bg-gradient-to-br from-gray-900 via-black to-gray-800 rounded-xl p-4 shadow-md hover:scale-105 transition-transform duration-300 border border-yellow-500/30 h-full">
@@ -13,5 +13,3 @@ function DiningHall({children, path, dist, hMeter}) {
         </Link>
     );
 }
-
-export default DiningHall;
