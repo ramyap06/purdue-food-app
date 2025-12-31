@@ -1,4 +1,4 @@
-export default function FoodItem({ name, carbCount, fatCount, proteinCount }) {
+export default function FoodItem({ name, calories, carbs, protein, fats}) {
   return (
     <button className="
       w-full
@@ -15,9 +15,10 @@ export default function FoodItem({ name, carbCount, fatCount, proteinCount }) {
     ">
       <h2 className="text-xl font-bold text-gray-900 mb-3">{name}</h2>
       <div className="text-gray-700 space-y-1 text-sm">
-        <p>Carbs: <span className="font-medium">{carbCount}g</span></p>
-        <p>Fat: <span className="font-medium">{fatCount}g</span></p>
-        <p>Protein: <span className="font-medium">{proteinCount}g</span></p>
+        <p>Calories: <span className="font-medium">{calories}g</span></p>
+        <p>Carbs: <span className="font-medium">{carbs}g</span></p>
+        <p>Protein: <span className="font-medium">{protein}g</span></p>
+        <p>Fats: <span className="font-medium">{fats}g</span></p>
       </div>
     </button>
   );
