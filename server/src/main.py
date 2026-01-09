@@ -44,12 +44,10 @@ def create_item(item: schemas.ItemsBase, db: db_dependency):
 
 @app.get("/items/{item_id}", response_model=schemas.ItemsBase)
 def get_item(item_id: int):
-    
-    
     if item_id < len(items): 
         return items[item_id]
     else:
-        raise HTTPException(status_code=404, detail="Item not found")
+        raise HTTPException(status_code=400, detail="Item not found")
 
 @app.put("/items/{item_id}", response_model=schemas.ItemsBase)
 def update_item(item_id: int, item: schemas.ItemsBase):
