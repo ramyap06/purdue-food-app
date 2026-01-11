@@ -1,4 +1,4 @@
-# purdue-food-app
+# boiler-gains
 
 ## Objective
 Web application that help Purdue students reach their nutrition goals with dining hall food.
