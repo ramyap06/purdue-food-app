@@ -1,10 +1,13 @@
 import psycopg2
+import itertools
+from menu_items import menu_items
 
 DATABASE_URL = "postgresql://postgres:ramyap06@localhost:5432/food_app"
 
 class ItemsObj:
-    def __init__(self, id, name='NOT NECESSARY', dining_hall_id=-1, calories=100, protein=100, carbs=100, fats=100):
-        self.id = id
+    id_iter = itertools.count()
+    def __init__(self, name='NOT NECESSARY', dining_hall_id=-1, calories=100, protein=100, carbs=100, fats=100):
+        self.id = next(self.id_iter)
         self.name = name
         self.dining_hall_id = dining_hall_id
         self.calories = calories
@@ -20,12 +23,22 @@ class ItemsObj:
 
 # array of objects to create
 item_objects = [
-    ItemsObj(0, "Grilled Cheese with Garlic Butter", 0, 547, 22, 42, 36),
-    ItemsObj(1, "California Dreaming Sandwich", 0, 530, 29, 38, 28),
-    ItemsObj(2,"Spicy Club", 0, 430, 30, 41, 16),
-    ItemsObj(3, "Veggie Wrap", 0, 431, 15, 53, 18)
+    ItemsObj("Grilled Cheese with Garlic Butter", 0, 547, 22, 42, 36),
+    ItemsObj("California Dreaming Sandwich", 0, 530, 29, 38, 28),
+    ItemsObj("Spicy Club", 0, 430, 30, 41, 16),
+    ItemsObj("Veggie Wrap", 0, 431, 15, 53, 18),
+    ItemsObj("Chicken Bacon Ranch Wrap", 0, 637, 40, 55, 27),
+    ItemsObj("Italian Sub", 0, 701, 37, 54, 38),
+    ItemsObj("Turkey Sub", 0, 605, 40, 48, 28),
+    ItemsObj("Double Egg Everything Bagel", 0, 521, 24, 52, 26),
+    ItemsObj("Double Egg Plain Bagel", 0, 764, 24, 52, 25),
+    ItemsObj("Strawberry Granola Parfait", 0, 265, 14, 41, 6),
+    ItemsObj("Chicken Caesar Salad", 0, 530, 19, 19, 43),
+    ItemsObj("Chef Salad", 0, 490, 23, 12, 39),
+    ItemsObj("Garden Salad", 0, 320, 7, 13, 28),
+    ItemsObj("Peanut Butter and Jelly Crunch Sandwich", 0, 750, 27, 79, 40),
+    ItemsObj("Nutella Berry Crunch Sandwich", 0, 764, 22, 95, 32),
 ]
-
 
 def post(item_objects: list[ItemsObj]):
     try:
@@ -151,5 +164,25 @@ def delete(object: ItemsObj):
             connection.close()
             print("PostgreSQL connection is closed")
 
-new_object = ItemsObj(5)
-delete(new_object)
+def delete_all():
+    try:
+        connection = psycopg2.connect(DATABASE_URL)
+        cursor = connection.cursor()
+        # Update single record now
+        sql_delete_query = """DELETE FROM items"""
+        cursor.execute(sql_delete_query)
+        connection.commit()
+        count = cursor.rowcount
+        print(count, "Record deleted successfully ")
+
+    except (Exception, psycopg2.Error) as error:
+        print("Error in Delete operation", error)
+
+    finally:
+        # closing database connection.
+        if connection:
+            cursor.close()
+            connection.close()
+            print("PostgreSQL connection is closed")
+
+post(item_objects=item_objects)

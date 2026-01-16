@@ -1,0 +1,51 @@
+1. fast api - Get / POST / Put/ delete
+
+2.  Module - Python Module   -- FoodRepository
+    - name - db Module
+        a. methods
+            a.1  - getall 
+                a. all rows return
+            a. Get ( Object)
+                    a. inside use the object.id to get db values
+                    b. map the db value -- to the object and return object
+            b. Post ( Array of object)
+                a. loop 
+                b. build and insert
+            c. Put ( object)
+                a. like a - get id, update
+            d. Delete (object)
+
+                b. get id and delete
+
+
+
+goal - 2 task 
+
+a.  learning modularization
+b.  learning isolation of the tasks which execution in isonlation
+
+
+how to 
+
+1. make 1 client Python
+    a. client will display request for the user to select his option
+    b. client will call the module methods 
+2. make the Module
+
+fast is exposing methods that can be consumed by anyone 
+
+a. web application
+b. console application
+c. ios mobu
+
+-- layer architecute
+
+1.  huge api -- singe project . . 
+
+client -- who job is methods -- exposed application ---  -- interact db 
+
+2-- 
+
+client ( ios)  --  Public host soft (methods) ( Fast Api)  -- project
+
+console -- action 1 --- module -- read from GET file ( json data) -- deserialize to your object -- fed back -- business module
