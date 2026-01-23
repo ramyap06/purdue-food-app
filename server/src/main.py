@@ -1,66 +1,50 @@
 from fastapi import FastAPI, HTTPException, Depends
-from typing import List, Annotated
-import models
-import schemas
-from database import engine, SessionLocal
-from sqlalchemy.orm import Session
-
-
-models.Base.metadata.create_all(bind=engine)
+from fastapi.middleware.cors import CORSMiddleware
+import crud
 
 # initializing the API
-app = FastAPI()
+app = FastAPI(
+    title="Boiler Gains API",
+    description="api to store backend for boiler gains web app",
+    docs_url="/docs",
+    redoc_url="/redoc"
+)
 
-# Dependency to get a DB session per request
-def get_database():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-db_dependency = Annotated[Session, Depends(get_database)]
-items = []
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 # create a REST API by defining endpoint & reading root
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to Boiler Gains!"}
+    return 0
 
-# CRUD operations
-@app.post("/items", response_model=schemas.ItemsBase)
-def create_item(item: schemas.ItemsBase, db: db_dependency):
-    db_item = models.Items(
-        name=item.name,
-        calories=item.calories,
-        protein=item.protein,
-        fats=item.fats,
-        dining_hall_id=item.dining_hall_id
-    )
-    db.add(db_item)
-    db.commit()
-    db.refresh(db_item)
-    return db_item
+@app.get("/items")
+def get_all_items():
+    return crud.get_all()
 
-@app.get("/items/{item_id}", response_model=schemas.ItemsBase)
-def get_item(item_id: int):
-    if item_id < len(items): 
-        return items[item_id]
-    else:
-        raise HTTPException(status_code=400, detail="Item not found")
+@app.post("/items")
+def create_item(item: dict):
+    return crud.post(item)
 
-@app.put("/items/{item_id}", response_model=schemas.ItemsBase)
-def update_item(item_id: int, item: schemas.ItemsBase):
-    if item_id < len(items):
-        items[item_id] = item
-        return item
-    else:
+@app.get("/items/{item_id}")
+def get_item(item_id: str):
+    return crud.get(item_id)
+
+@app.put("/items/{item_id}")
+def update_item(item_id: str, item_dict: dict):
+    row = crud.put(item_id, item_dict)
+    if row is None:
         raise HTTPException(status_code=404, detail="Item not found")
+    return row
 
-@app.delete("/items/{item_id}", response_model=schemas.ItemsBase)
-def delete_item(item_id: int):
-    if item_id < len(items):
-        deleted_item = items.pop(item_id)
-        return deleted_item
-    else:
+@app.delete("/items/{item_id}")
+def delete_item(item_id: str):
+    deleted = crud.delete(item_id)
+    if not deleted:
         raise HTTPException(status_code=404, detail="Item not found")
+    return {"deleted": True}
